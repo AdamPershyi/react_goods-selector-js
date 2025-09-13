@@ -19,6 +19,10 @@ export const App = () => {
   // стан (дефолт — Jam)
   const [selectedGood, setSelectedGood] = useState('Jam');
 
+  const handleSelectGood = good => () => setSelectedGood(good);
+  const handleClearSelection = () => setSelectedGood('');
+  const handleRemoveSelection = () => setSelectedGood('');
+
   // заголовок
   const titleText = selectedGood
     ? `${selectedGood} is selected`
@@ -34,7 +38,8 @@ export const App = () => {
             data-cy="ClearButton"
             type="button"
             className="delete ml-3"
-            onClick={() => setSelectedGood('')}
+            onClick={handleClearSelection}
+            aria-label="Clear selection"
           />
         )}
       </h1>
@@ -51,12 +56,13 @@ export const App = () => {
                 className={isSelected ? 'has-background-success-light' : ''}
               >
                 <td>
-                  {!selectedGood && (
+                  {!isSelected && (
                     <button
                       data-cy="AddButton"
                       type="button"
                       className="button"
-                      onClick={() => setSelectedGood(good)}
+                      onClick={handleSelectGood(good)}
+                      aria-label={`Select ${good}`}
                     >
                       +
                     </button>
@@ -67,7 +73,8 @@ export const App = () => {
                       data-cy="RemoveButton"
                       type="button"
                       className="button is-info"
-                      onClick={() => setSelectedGood('')}
+                      onClick={handleRemoveSelection}
+                      aria-label={`Remove ${good}`}
                     >
                       -
                     </button>
